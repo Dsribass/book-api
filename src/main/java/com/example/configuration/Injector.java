@@ -11,11 +11,14 @@ import org.springframework.context.annotation.Configuration;
 public class Injector {
     public Logger getLogger() {
         return new Logger() {
-            private final org.slf4j.Logger logger = LoggerFactory.getLogger(getClazz());
+            private org.slf4j.Logger logger;
 
             @Override
-            public void log(String message) {
-                logger.error(message);
+            public void log(String message, Throwable throwable) {
+                if (logger == null) {
+                    logger = LoggerFactory.getLogger(getClazz());
+                }
+                logger.error(message, throwable);
             }
         };
     }

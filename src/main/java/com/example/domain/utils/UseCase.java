@@ -16,14 +16,14 @@ public abstract class UseCase<Input, Output> {
     abstract protected Output run(Input input);
 
     public Output execute(@Nonnull Input input) {
-        Objects.requireNonNull(input);
+        Objects.requireNonNull(input, "Use Case: Input must not be null");
 
         try {
             var result = run(input);
-            Objects.requireNonNull(result);
+            Objects.requireNonNull(result, "Use Case: Output must not be null");
             return result;
         } catch (Exception e) {
-            logger.log(e.toString());
+            logger.log(e.toString(), e);
             if (e instanceof DomainException) {
                 throw (DomainException) e;
             }

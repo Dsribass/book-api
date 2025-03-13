@@ -14,5 +14,5 @@ public abstract class Logger {
         this.clazz = clazz;
     }
 
-    abstract public void log(String message);
+    abstract public void log(String message, Throwable throwable);
 }

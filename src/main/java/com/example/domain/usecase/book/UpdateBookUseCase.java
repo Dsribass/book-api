@@ -4,9 +4,10 @@ import com.example.domain.entity.Book;
 import com.example.domain.exception.ItemNotExistsException;
 import com.example.domain.gateway.BookGateway;
 import com.example.domain.utils.Logger;
+import com.example.domain.utils.NoResult;
 import com.example.domain.utils.UseCase;
 
-public class UpdateBookUseCase extends UseCase<UpdateBookUseCase.Input, Void> {
+public class UpdateBookUseCase extends UseCase<UpdateBookUseCase.Input, NoResult> {
     private final BookGateway bookGateway;
 
     public UpdateBookUseCase(BookGateway bookGateway, Logger logger) {
@@ -16,13 +17,13 @@ public class UpdateBookUseCase extends UseCase<UpdateBookUseCase.Input, Void> {
     }
 
     @Override
-    protected Void run(UpdateBookUseCase.Input input) {
+    protected NoResult run(UpdateBookUseCase.Input input) {
         if (bookGateway.findByIsbn(input.book.getIsbn()).isEmpty()) {
             throw new ItemNotExistsException("Book with ISBN " + input.book.getIsbn() + " does not exist");
         }
 
         bookGateway.update(input.book);
-        return null;
+        return new NoResult();
     }
 
     public record Input(Book book) {
