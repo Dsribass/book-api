@@ -5,9 +5,7 @@ import com.example.domain.exception.ItemNotExistsException;
 import com.example.domain.gateway.BookGateway;
 import com.example.domain.usecase.UseCase;
 
-import java.util.Optional;
-
-public class GetBookByIsbnUseCase extends UseCase<GetBookByIsbnUseCase.Input, Optional<Book>> {
+public class GetBookByIsbnUseCase extends UseCase<GetBookByIsbnUseCase.Input, Book> {
     private final BookGateway bookGateway;
 
     public GetBookByIsbnUseCase(BookGateway bookGateway) {
@@ -15,8 +13,9 @@ public class GetBookByIsbnUseCase extends UseCase<GetBookByIsbnUseCase.Input, Op
     }
 
     @Override
-    protected Optional<Book> run(GetBookByIsbnUseCase.Input input) {
-        return bookGateway.findByIsbn(input.isbn);
+    protected Book run(GetBookByIsbnUseCase.Input input) {
+        return bookGateway.findByIsbn(input.isbn)
+                .orElseThrow(() -> new ItemNotExistsException("Book not found"));
     }
 
     public record Input(String isbn) {
