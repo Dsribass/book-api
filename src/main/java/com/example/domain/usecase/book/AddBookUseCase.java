@@ -3,13 +3,16 @@ package com.example.domain.usecase.book;
 import com.example.domain.entity.Book;
 import com.example.domain.exception.ItemAlreadyExists;
 import com.example.domain.gateway.BookGateway;
-import com.example.domain.usecase.NoResult;
-import com.example.domain.usecase.UseCase;
+import com.example.domain.utils.Logger;
+import com.example.domain.utils.NoResult;
+import com.example.domain.utils.UseCase;
 
 public class AddBookUseCase extends UseCase<AddBookUseCase.Input, NoResult> {
     private final BookGateway bookGateway;
 
-    public AddBookUseCase(BookGateway bookGateway) {
+    public AddBookUseCase(BookGateway bookGateway, Logger logger) {
+        super(logger);
+        logger.setClazz(AddBookUseCase.class);
         this.bookGateway = bookGateway;
     }
 

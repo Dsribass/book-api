@@ -3,12 +3,15 @@ package com.example.domain.usecase.book;
 import com.example.domain.entity.Book;
 import com.example.domain.exception.ItemNotExistsException;
 import com.example.domain.gateway.BookGateway;
-import com.example.domain.usecase.UseCase;
+import com.example.domain.utils.Logger;
+import com.example.domain.utils.UseCase;
 
 public class GetBookByIsbnUseCase extends UseCase<GetBookByIsbnUseCase.Input, Book> {
     private final BookGateway bookGateway;
 
-    public GetBookByIsbnUseCase(BookGateway bookGateway) {
+    public GetBookByIsbnUseCase(BookGateway bookGateway, Logger logger) {
+        super(logger);
+        logger.setClazz(GetBookByIsbnUseCase.class);
         this.bookGateway = bookGateway;
     }
 
