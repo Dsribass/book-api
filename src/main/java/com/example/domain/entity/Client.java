@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Client {
-    private final UUID id;
+    private final String id;
     private final String name;
     private final String email;
     private final String phoneNumber;
@@ -13,7 +13,7 @@ public class Client {
     private final ZonedDateTime registrationDate;
     private Boolean active;
 
-    public Client(UUID id,
+    public Client(String id,
                   String name,
                   String email,
                   String phoneNumber,
@@ -46,7 +46,7 @@ public class Client {
             ZonedDateTime registrationDate,
             Boolean active
     ) {
-        this(UUID.randomUUID(), name, email, phoneNumber, address, registrationDate, active);
+        this(UUID.randomUUID().toString(), name, email, phoneNumber, address, registrationDate, active);
     }
 
     public void activate() {
@@ -57,7 +57,7 @@ public class Client {
         active = false;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

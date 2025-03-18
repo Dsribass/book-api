@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Loan {
-    private final UUID id;
-    private final UUID clientId;
-    private final UUID bookId;
+    private final String id;
+    private final String clientId;
+    private final String bookId;
     private final ZonedDateTime loanDate;
     private final ZonedDateTime dueDate;
     private final BigDecimal loanPrice;
     private final BigDecimal dailyFine;
     private ZonedDateTime returnDate;
 
-    public Loan(UUID id,
-                UUID clientId,
-                UUID bookId,
+    public Loan(String id,
+                String clientId,
+                String bookId,
                 ZonedDateTime loanDate,
                 ZonedDateTime dueDate,
                 ZonedDateTime returnDate,
@@ -43,15 +43,15 @@ public class Loan {
         this.dailyFine = dailyFine;
     }
 
-    public Loan(UUID clientId,
-                UUID bookId,
+    public Loan(String clientId,
+                String bookId,
                 ZonedDateTime loanDate,
                 ZonedDateTime dueDate,
                 ZonedDateTime returnDate,
                 BigDecimal loanPrice,
                 BigDecimal dailyFine
     ) {
-        this(UUID.randomUUID(), clientId, bookId, loanDate, dueDate, returnDate, loanPrice, dailyFine);
+        this(UUID.randomUUID().toString(), clientId, bookId, loanDate, dueDate, returnDate, loanPrice, dailyFine);
     }
 
     public LoanStatus getStatus() {
@@ -80,15 +80,15 @@ public class Loan {
         returnDate = ZonedDateTime.now();
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public UUID getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public UUID getBookId() {
+    public String getBookId() {
         return bookId;
     }
 

@@ -8,7 +8,7 @@ import java.util.Objects;
 public abstract class UseCase<Input, Output> {
     private final Logger logger;
 
-    protected UseCase(Logger logger) {
+    public UseCase(Logger logger) {
         this.logger = logger;
     }
 
