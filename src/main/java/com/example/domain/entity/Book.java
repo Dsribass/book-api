@@ -2,7 +2,7 @@ package com.example.domain.entity;
 
 import java.util.Objects;
 
-public final class Book {
+public class Book {
     private final String isbn;
     private final String title;
     private final String author;
@@ -28,13 +28,19 @@ public final class Book {
         this.availableCopies = availableCopies;
     }
 
-    public void lend() {
-        if (availableCopies > 0) {
-            availableCopies--;
+    public void lendBook() {
+        if (availableCopies <= 0) {
+            throw new IllegalStateException("No copies available");
         }
+
+        availableCopies--;
     }
 
     public void returnBook() {
+        if (availableCopies >= totalCopies) {
+            throw new IllegalStateException("All copies are already available");
+        }
+
         availableCopies++;
     }
 

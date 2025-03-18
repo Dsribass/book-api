@@ -2,20 +2,19 @@ package com.example.domain.utils;
 
 import com.example.domain.exception.DomainException;
 import com.example.domain.exception.UnexpectedException;
-import jakarta.annotation.Nonnull;
 
 import java.util.Objects;
 
 public abstract class UseCase<Input, Output> {
     private final Logger logger;
 
-    protected UseCase(@Nonnull Logger logger) {
+    protected UseCase(Logger logger) {
         this.logger = logger;
     }
 
     abstract protected Output run(Input input);
 
-    public Output execute(@Nonnull Input input) {
+    public Output execute(Input input) {
         Objects.requireNonNull(input, "Use Case: Input must not be null");
 
         try {
