@@ -1,4 +1,4 @@
-package com.example.infrastructure.controller.response;
+package com.example.infrastructure.controller.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

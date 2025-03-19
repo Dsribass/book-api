@@ -1,4 +1,4 @@
-package com.example.infrastructure.controller.request;
+package com.example.infrastructure.controller.dto.request;
 
 import com.example.domain.entity.Book;
 import jakarta.validation.constraints.Min;

@@ -7,16 +7,16 @@ import java.util.UUID;
 public class Client {
     private final String id;
     private final String name;
-    private final String email;
-    private final String phoneNumber;
+    private final Email email;
+    private final Phone phoneNumber;
     private final String address;
     private final ZonedDateTime registrationDate;
     private Boolean active;
 
     public Client(String id,
                   String name,
-                  String email,
-                  String phoneNumber,
+                  Email email,
+                  Phone phoneNumber,
                   String address,
                   ZonedDateTime registrationDate,
                   Boolean active
@@ -40,13 +40,12 @@ public class Client {
 
     public Client(
             String name,
-            String email,
-            String phoneNumber,
+            Email email,
+            Phone phoneNumber,
             String address,
-            ZonedDateTime registrationDate,
             Boolean active
     ) {
-        this(UUID.randomUUID().toString(), name, email, phoneNumber, address, registrationDate, active);
+        this(UUID.randomUUID().toString(), name, email, phoneNumber, address, ZonedDateTime.now(), active);
     }
 
     public void activate() {
@@ -65,11 +64,11 @@ public class Client {
         return name;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public String getPhoneNumber() {
+    public Phone getPhoneNumber() {
         return phoneNumber;
     }
 

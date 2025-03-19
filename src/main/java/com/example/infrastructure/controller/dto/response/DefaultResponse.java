@@ -1,13 +1,11 @@
-package com.example.infrastructure.controller.response;
+package com.example.infrastructure.controller.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public record DefaultResponse(String message, Object data) {
     public DefaultResponse {
-        if (message == null) {
-            throw new IllegalArgumentException("Message cannot be null");
-        }
+        assert message != null : "Message must not be null";
     }
 
     public ResponseEntity<DefaultResponse> toResponseEntity(HttpStatus status) {

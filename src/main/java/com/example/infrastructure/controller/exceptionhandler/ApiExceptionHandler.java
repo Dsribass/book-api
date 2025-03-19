@@ -2,7 +2,7 @@ package com.example.infrastructure.controller.exceptionhandler;
 
 import com.example.domain.exception.ItemAlreadyExists;
 import com.example.domain.exception.ItemNotExistsException;
-import com.example.infrastructure.controller.response.ErrorResponse;
+import com.example.infrastructure.controller.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -59,6 +59,15 @@ public class ApiExceptionHandler {
         var errorResponse = new ErrorResponse(
                 "Invalid request",
                 errorMap,
+                HttpStatus.BAD_REQUEST
+        );
+        return errorResponse.toResponseEntity();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException e) {
+        var errorResponse = new ErrorResponse(
+                e.getMessage(),
                 HttpStatus.BAD_REQUEST
         );
         return errorResponse.toResponseEntity();

@@ -1,9 +1,9 @@
 package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.book.*;
-import com.example.infrastructure.controller.request.AddBookRequest;
-import com.example.infrastructure.controller.request.UpdateBookRequest;
-import com.example.infrastructure.controller.response.DefaultResponse;
+import com.example.infrastructure.controller.dto.request.AddBookRequest;
+import com.example.infrastructure.controller.dto.request.UpdateBookRequest;
+import com.example.infrastructure.controller.dto.response.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
