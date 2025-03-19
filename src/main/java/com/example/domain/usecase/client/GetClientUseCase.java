@@ -9,7 +9,7 @@ import com.example.domain.utils.UseCase;
 public class GetClientUseCase extends UseCase<GetClientUseCase.Input, Client> {
     private final ClientGateway clientGateway;
 
-    public GetClientUseCase(Logger logger, ClientGateway clientGateway) {
+    public GetClientUseCase(ClientGateway clientGateway, Logger logger) {
         super(logger);
         logger.setClazz(GetClientUseCase.class);
         this.clientGateway = clientGateway;
