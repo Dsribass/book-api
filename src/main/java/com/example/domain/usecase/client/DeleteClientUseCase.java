@@ -1,5 +1,6 @@
 package com.example.domain.usecase.client;
 
+import com.example.domain.exception.ItemNotExistsException;
 import com.example.domain.gateway.ClientGateway;
 import com.example.domain.utils.Logger;
 import com.example.domain.utils.NoResult;
@@ -16,6 +17,10 @@ public class DeleteClientUseCase extends UseCase<DeleteClientUseCase.Input, NoRe
 
     @Override
     protected NoResult run(Input input) {
+        if (clientGateway.findById(input.id).isEmpty()) {
+            throw new ItemNotExistsException("Client not found");
+        }
+
         clientGateway.deleteById(input.id);
         return new NoResult();
     }

@@ -2,6 +2,7 @@ package com.example.infrastructure.repository;
 
 import com.example.domain.entity.Client;
 import com.example.domain.gateway.ClientGateway;
+import com.example.domain.value.Email;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +12,10 @@ import java.util.Optional;
 @Repository
 public class InMemoryClientRepository implements ClientGateway {
     private final List<Client> clients = new ArrayList<>();
+
+    public Optional<Client> findByEmail(Email email) {
+        return clients.stream().filter(client -> client.getEmail().equals(email)).findFirst();
+    }
 
     public Optional<Client> findById(String id) {
         return clients.stream().filter(client -> client.getId().equals(id)).findFirst();

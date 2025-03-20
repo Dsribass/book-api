@@ -2,7 +2,7 @@ package com.example.infrastructure.controller.exceptionhandler;
 
 import com.example.domain.exception.ItemAlreadyExists;
 import com.example.domain.exception.ItemNotExistsException;
-import com.example.infrastructure.controller.dto.response.ErrorResponse;
+import com.example.infrastructure.controller.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

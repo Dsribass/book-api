@@ -18,7 +18,7 @@ public class UpdateBookUseCase extends UseCase<UpdateBookUseCase.Input, NoResult
 
     @Override
     protected NoResult run(UpdateBookUseCase.Input input) {
-        if (bookGateway.findByIsbn(input.book.getIsbn()).isEmpty()) {
+        if (bookGateway.findByIsbn(input.book.getIsbn().value()).isEmpty()) {
             throw new ItemNotExistsException("Book with ISBN " + input.book.getIsbn() + " does not exist");
         }
 

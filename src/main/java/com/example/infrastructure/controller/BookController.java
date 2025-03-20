@@ -1,9 +1,10 @@
 package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.book.*;
-import com.example.infrastructure.controller.dto.request.AddBookRequest;
-import com.example.infrastructure.controller.dto.request.UpdateBookRequest;
-import com.example.infrastructure.controller.dto.response.DefaultResponse;
+import com.example.domain.value.ISBN;
+import com.example.infrastructure.controller.dto.AddBookDTO;
+import com.example.infrastructure.controller.dto.UpdateBookDTO;
+import com.example.infrastructure.controller.response.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,24 +35,28 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<DefaultResponse> add(@RequestBody @Valid AddBookRequest request) {
+    public ResponseEntity<DefaultResponse> add(@RequestBody @Valid AddBookDTO request) {
         addBookUseCase.execute(new AddBookUseCase.Input(request.toBook()));
 
-        return new DefaultResponse("Book added successfully", null).toResponseEntity(HttpStatus.CREATED);
+        return new DefaultResponse("Book added successfully", null)
+                .toResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{isbn}")
     public ResponseEntity<DefaultResponse> update(
             @PathVariable String isbn,
-            @RequestBody @Valid UpdateBookRequest request
+            @RequestBody @Valid UpdateBookDTO request
     ) {
-        updateBookUseCase.execute(new UpdateBookUseCase.Input(request.toBook(isbn)));
-        return new DefaultResponse("Book updated successfully", null).toResponseEntity();
+        updateBookUseCase.execute(new UpdateBookUseCase.Input(
+                request.toBook(new ISBN(isbn)
+                )));
+        return new DefaultResponse("Book updated successfully", null)
+                .toResponseEntity();
     }
 
     @DeleteMapping("/{isbn}")
     public ResponseEntity<DefaultResponse> delete(@PathVariable String isbn) {
-        deleteBookUseCase.execute(new DeleteBookUseCase.Input(isbn));
+        deleteBookUseCase.execute(new DeleteBookUseCase.Input(new ISBN(isbn)));
         return new DefaultResponse(
                 "Book deleted successfully",
                 Map.of("deletedIsbn", isbn)
@@ -60,7 +65,7 @@ public class BookController {
 
     @GetMapping("/{isbn}")
     public ResponseEntity<DefaultResponse> get(@PathVariable String isbn) {
-        var book = getBookByIsbnUseCase.execute(new GetBookByIsbnUseCase.Input(isbn));
+        var book = getBookByIsbnUseCase.execute(new GetBookByIsbnUseCase.Input(new ISBN(isbn)));
         return new DefaultResponse("Book found", book).toResponseEntity();
     }
 

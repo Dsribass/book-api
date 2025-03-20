@@ -1,4 +1,4 @@
-package com.example.infrastructure.controller.dto.response;
+package com.example.infrastructure.controller.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import java.util.Map;
 public record ErrorResponse(
         String message,
         ZonedDateTime timestamp,
-        Map<String, String> errors,
+        Map<String, String> validationErrors,
         HttpStatus status
 ) {
     public ErrorResponse(

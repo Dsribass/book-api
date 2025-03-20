@@ -1,8 +1,8 @@
 package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.client.*;
-import com.example.infrastructure.controller.dto.request.ClientRequest;
-import com.example.infrastructure.controller.dto.response.DefaultResponse;
+import com.example.infrastructure.controller.dto.ClientDTO;
+import com.example.infrastructure.controller.response.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +33,8 @@ public class ClientController {
     }
 
     @PostMapping
-    ResponseEntity<DefaultResponse> save(@RequestBody @Valid ClientRequest client) {
-        addClientUseCase.execute(new AddClientUseCase.Input(client.toClient()));
+    ResponseEntity<DefaultResponse> save(@RequestBody @Valid ClientDTO client) {
+        addClientUseCase.execute(new AddClientUseCase.Input(client.toDomain()));
 
         return new DefaultResponse("Client added successfully", null)
                 .toResponseEntity(HttpStatus.CREATED);
@@ -44,9 +44,9 @@ public class ClientController {
     @PostMapping("/{id}")
     ResponseEntity<DefaultResponse> update(
             @PathVariable String id,
-            @RequestBody @Valid ClientRequest client
+            @RequestBody @Valid ClientDTO client
     ) {
-        updateClientUseCase.execute(new UpdateClientUseCase.Input(client.toClient(id)));
+        updateClientUseCase.execute(new UpdateClientUseCase.Input(client.toDomain(id)));
         return new DefaultResponse("Client updated successfully", null)
                 .toResponseEntity();
     }

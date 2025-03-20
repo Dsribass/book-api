@@ -1,5 +1,7 @@
 package com.example.domain.entity;
 
+import com.example.domain.value.LoanStatus;
+
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;

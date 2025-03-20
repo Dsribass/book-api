@@ -18,7 +18,7 @@ public class AddBookUseCase extends UseCase<AddBookUseCase.Input, NoResult> {
 
     @Override
     protected NoResult run(AddBookUseCase.Input input) {
-        if (bookGateway.findByIsbn(input.book.getIsbn()).isPresent()) {
+        if (bookGateway.findByIsbn(input.book.getIsbn().value()).isPresent()) {
             throw new ItemAlreadyExists("Book already exists");
         }
 

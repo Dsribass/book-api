@@ -1,21 +1,24 @@
 package com.example.domain.entity;
 
+import com.example.domain.value.ISBN;
+
+import java.time.Year;
 import java.util.Objects;
 
 public class Book {
-    private final String isbn;
+    private final ISBN isbn;
     private final String title;
     private final String author;
     private final String genre;
-    private final Integer publishedYear;
+    private final Year publishedYear;
     private Integer totalCopies;
     private Integer availableCopies;
 
-    public Book(String isbn,
+    public Book(ISBN isbn,
                 String title,
                 String author,
                 String genre,
-                Integer publishedYear,
+                Year publishedYear,
                 Integer totalCopies,
                 Integer availableCopies
     ) {
@@ -54,7 +57,7 @@ public class Book {
         availableCopies -= copies;
     }
 
-    public String getIsbn() {
+    public ISBN getIsbn() {
         return isbn;
     }
 
@@ -70,7 +73,7 @@ public class Book {
         return genre;
     }
 
-    public Integer getPublishedYear() {
+    public Year getPublishedYear() {
         return publishedYear;
     }
 

@@ -4,6 +4,7 @@ import com.example.domain.gateway.BookGateway;
 import com.example.domain.utils.Logger;
 import com.example.domain.utils.NoResult;
 import com.example.domain.utils.UseCase;
+import com.example.domain.value.ISBN;
 
 public class DeleteBookUseCase extends UseCase<DeleteBookUseCase.Input, NoResult> {
     private final BookGateway bookGateway;
@@ -16,10 +17,10 @@ public class DeleteBookUseCase extends UseCase<DeleteBookUseCase.Input, NoResult
 
     @Override
     protected NoResult run(DeleteBookUseCase.Input input) {
-        bookGateway.deleteByIsbn(input.isbn);
+        bookGateway.deleteByIsbn(input.isbn.value());
         return new NoResult();
     }
 
-    public record Input(String isbn) {
+    public record Input(ISBN isbn) {
     }
 }

@@ -1,5 +1,9 @@
 package com.example.domain.entity;
 
+import com.example.domain.value.Address;
+import com.example.domain.value.Email;
+import com.example.domain.value.Phone;
+
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,7 +13,7 @@ public class Client {
     private final String name;
     private final Email email;
     private final Phone phoneNumber;
-    private final String address;
+    private final Address address;
     private final ZonedDateTime registrationDate;
     private Boolean active;
 
@@ -17,7 +21,7 @@ public class Client {
                   String name,
                   Email email,
                   Phone phoneNumber,
-                  String address,
+                  Address address,
                   ZonedDateTime registrationDate,
                   Boolean active
     ) {
@@ -42,7 +46,7 @@ public class Client {
             String name,
             Email email,
             Phone phoneNumber,
-            String address,
+            Address address,
             Boolean active
     ) {
         this(UUID.randomUUID().toString(), name, email, phoneNumber, address, ZonedDateTime.now(), active);
@@ -72,7 +76,7 @@ public class Client {
         return phoneNumber;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 

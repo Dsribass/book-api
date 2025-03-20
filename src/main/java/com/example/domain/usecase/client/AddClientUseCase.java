@@ -22,6 +22,10 @@ public class AddClientUseCase extends UseCase<AddClientUseCase.Input, NoResult> 
             throw new ItemAlreadyExists("Client already exists");
         }
 
+        if (clientGateway.findByEmail(input.client.getEmail()).isPresent()) {
+            throw new ItemAlreadyExists("Client with this email already exists");
+        }
+
         clientGateway.save(input.client);
         return new NoResult();
     }
