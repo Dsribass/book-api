@@ -1,6 +1,7 @@
-package com.example.infrastructure.controller.dto;
+package com.example.infrastructure.controller.dto.client;
 
 import com.example.domain.entity.Client;
+import com.example.domain.value.Address;
 import com.example.domain.value.Email;
 import com.example.domain.value.Phone;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.ZonedDateTime;
 
-public record ClientDTO(
+public record ClientRequest(
         @NotBlank(message = "Name is required")
         String name,
 
@@ -19,29 +20,29 @@ public record ClientDTO(
         String phoneNumber,
 
         @NotNull(message = "Address is required")
-        Address address
+        ClientRequest.AddressRequest address
 ) {
-    public Client toDomain() {
+    public Client toEntity() {
         return new Client(
                 name,
                 new Email(email),
                 new Phone(phoneNumber),
-                address.toDomain(),
+                address.toEntity(),
                 true);
     }
 
-    public Client toDomain(String id) {
+    public Client toEntity(String id) {
         return new Client(
                 id,
                 name,
                 new Email(email),
                 new Phone(phoneNumber),
-                address.toDomain(),
+                address.toEntity(),
                 ZonedDateTime.now(),
                 true);
     }
 
-    public record Address(
+    public record AddressRequest(
             @NotBlank(message = "Street is required")
             String street,
             @NotBlank(message = "Number is required")
@@ -53,8 +54,8 @@ public record ClientDTO(
             @NotBlank(message = "Zip code is required")
             String zipCode
     ) {
-        public com.example.domain.value.Address toDomain() {
-            return new com.example.domain.value.Address(street, number, city, state, zipCode);
+        public Address toEntity() {
+            return new Address(street, number, city, state, zipCode);
         }
     }
 

@@ -2,9 +2,10 @@ package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.book.*;
 import com.example.domain.value.ISBN;
-import com.example.infrastructure.controller.dto.AddBookDTO;
-import com.example.infrastructure.controller.dto.UpdateBookDTO;
-import com.example.infrastructure.controller.response.DefaultResponse;
+import com.example.infrastructure.controller.dto.book.AddBookRequest;
+import com.example.infrastructure.controller.dto.book.BookResponse;
+import com.example.infrastructure.controller.dto.book.UpdateBookRequest;
+import com.example.infrastructure.controller.utils.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<DefaultResponse> add(@RequestBody @Valid AddBookDTO request) {
-        addBookUseCase.execute(new AddBookUseCase.Input(request.toBook()));
+    public ResponseEntity<DefaultResponse> add(@RequestBody @Valid AddBookRequest request) {
+        addBookUseCase.execute(new AddBookUseCase.Input(request.toEntity()));
 
         return new DefaultResponse("Book added successfully", null)
                 .toResponseEntity(HttpStatus.CREATED);
@@ -45,10 +46,10 @@ public class BookController {
     @PutMapping("/{isbn}")
     public ResponseEntity<DefaultResponse> update(
             @PathVariable String isbn,
-            @RequestBody @Valid UpdateBookDTO request
+            @RequestBody @Valid UpdateBookRequest request
     ) {
         updateBookUseCase.execute(new UpdateBookUseCase.Input(
-                request.toBook(new ISBN(isbn)
+                request.toEntity(new ISBN(isbn)
                 )));
         return new DefaultResponse("Book updated successfully", null)
                 .toResponseEntity();
@@ -66,12 +67,21 @@ public class BookController {
     @GetMapping("/{isbn}")
     public ResponseEntity<DefaultResponse> get(@PathVariable String isbn) {
         var book = getBookByIsbnUseCase.execute(new GetBookByIsbnUseCase.Input(new ISBN(isbn)));
-        return new DefaultResponse("Book found", book).toResponseEntity();
+
+        return new DefaultResponse(
+                "Book found",
+                BookResponse.fromEntity(book)
+        ).toResponseEntity();
     }
 
     @GetMapping
     public ResponseEntity<DefaultResponse> getAll() {
         var books = getAllBooksUseCase.execute(new GetAllBooksUseCase.Input());
-        return new DefaultResponse("List of books", books).toResponseEntity();
+        return new DefaultResponse(
+                "List of books",
+                books.stream()
+                        .map(BookResponse::fromEntity)
+                        .toList()
+        ).toResponseEntity();
     }
 }

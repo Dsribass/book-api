@@ -1,8 +1,9 @@
 package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.client.*;
-import com.example.infrastructure.controller.dto.ClientDTO;
-import com.example.infrastructure.controller.response.DefaultResponse;
+import com.example.infrastructure.controller.dto.client.ClientRequest;
+import com.example.infrastructure.controller.dto.client.ClientResponse;
+import com.example.infrastructure.controller.utils.DefaultResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,8 @@ public class ClientController {
     }
 
     @PostMapping
-    ResponseEntity<DefaultResponse> save(@RequestBody @Valid ClientDTO client) {
-        addClientUseCase.execute(new AddClientUseCase.Input(client.toDomain()));
+    ResponseEntity<DefaultResponse> save(@RequestBody @Valid ClientRequest client) {
+        addClientUseCase.execute(new AddClientUseCase.Input(client.toEntity()));
 
         return new DefaultResponse("Client added successfully", null)
                 .toResponseEntity(HttpStatus.CREATED);
@@ -44,9 +45,9 @@ public class ClientController {
     @PostMapping("/{id}")
     ResponseEntity<DefaultResponse> update(
             @PathVariable String id,
-            @RequestBody @Valid ClientDTO client
+            @RequestBody @Valid ClientRequest client
     ) {
-        updateClientUseCase.execute(new UpdateClientUseCase.Input(client.toDomain(id)));
+        updateClientUseCase.execute(new UpdateClientUseCase.Input(client.toEntity(id)));
         return new DefaultResponse("Client updated successfully", null)
                 .toResponseEntity();
     }
@@ -63,18 +64,21 @@ public class ClientController {
 
     @GetMapping("/{id}")
     ResponseEntity<DefaultResponse> get(@PathVariable String id) {
+        final var client = getClientUseCase.execute(new GetClientUseCase.Input(id));
         return new DefaultResponse(
                 "Client retrieved successfully",
-                getClientUseCase.execute(new GetClientUseCase.Input(id))
+                ClientResponse.fromEntity(client)
         )
                 .toResponseEntity();
     }
 
     @GetMapping
     ResponseEntity<DefaultResponse> getAll() {
+        final var clients = getAllClientsUseCase.execute(new GetAllClientsUseCase.Input());
         return new DefaultResponse(
                 "Clients retrieved successfully",
-                getAllClientsUseCase.execute(new GetAllClientsUseCase.Input())
+                clients.stream()
+                        .map(ClientResponse::fromEntity)
         )
                 .toResponseEntity();
     }
