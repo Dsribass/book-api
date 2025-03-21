@@ -25,7 +25,6 @@ public class Client {
                   ZonedDateTime registrationDate,
                   Boolean active
     ) {
-        Objects.requireNonNull(id);
         Objects.requireNonNull(name);
         Objects.requireNonNull(email);
         Objects.requireNonNull(phoneNumber);
@@ -33,7 +32,7 @@ public class Client {
         Objects.requireNonNull(registrationDate);
         Objects.requireNonNull(active);
 
-        this.id = id;
+        this.id = id != null ? id : UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

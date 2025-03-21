@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public record Address(String street, String number, String city, String state, String zipCode) {
-    private static final Pattern CEP_PATTERN = Pattern.compile("\\d{5}-\\d{3}");
+    private static final Pattern CEP_PATTERN = Pattern.compile("\\d{5}\\d{3}");
 
     public Address(String street, String number, String city, String state, String zipCode) {
         Objects.requireNonNull(street, "Street cannot be null");
