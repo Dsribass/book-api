@@ -20,10 +20,7 @@ public record UpdateBookRequest(
         Integer publishedYear,
         @NotNull(message = "Total copies must not be null")
         @Min(value = 1, message = "Total copies must be at least 1")
-        Integer totalCopies,
-        @NotNull(message = "Total copies must not be null")
-        @Min(value = 1, message = "Total copies must be at least 1")
-        Integer availableCopies
+        Integer totalCopies
 ) {
     public Book toEntity(ISBN isbn) {
         return new Book(isbn,
@@ -31,7 +28,6 @@ public record UpdateBookRequest(
                 author,
                 genre,
                 Year.of(publishedYear),
-                totalCopies,
-                availableCopies);
+                totalCopies);
     }
 }

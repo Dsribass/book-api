@@ -21,13 +21,10 @@ public record AddBookRequest(
         Integer publishedYear,
         @NotNull(message = "Total copies must not be null")
         @Min(value = 1, message = "Total copies must be at least 1")
-        Integer totalCopies,
-        @NotNull(message = "Total copies must not be null")
-        @Min(value = 1, message = "Total copies must be at least 1")
-        Integer availableCopies) {
+        Integer totalCopies) {
 
     public Book toEntity() {
-        return new Book(new ISBN(isbn), title, author, genre, Year.of(publishedYear), totalCopies, availableCopies);
+        return new Book(new ISBN(isbn), title, author, genre, Year.of(publishedYear), totalCopies);
     }
 
 }

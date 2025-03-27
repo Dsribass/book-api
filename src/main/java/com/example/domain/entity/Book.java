@@ -11,7 +11,7 @@ public class Book {
     private final String author;
     private final String genre;
     private final Year publishedYear;
-    private Integer totalCopies;
+    private final Integer totalCopies;
     private Integer availableCopies;
 
     public Book(ISBN isbn,
@@ -31,6 +31,16 @@ public class Book {
         this.availableCopies = availableCopies;
     }
 
+    public Book(ISBN isbn,
+                String title,
+                String author,
+                String genre,
+                Year publishedYear,
+                Integer totalCopies
+    ) {
+        this(isbn, title, author, genre, publishedYear, totalCopies, totalCopies);
+    }
+
     public void lendBook() {
         if (availableCopies <= 0) {
             throw new IllegalStateException("No copies available");
@@ -45,16 +55,6 @@ public class Book {
         }
 
         availableCopies++;
-    }
-
-    public void addCopies(Integer copies) {
-        totalCopies += copies;
-        availableCopies += copies;
-    }
-
-    public void removeCopies(Integer copies) {
-        totalCopies -= copies;
-        availableCopies -= copies;
     }
 
     public ISBN getIsbn() {
