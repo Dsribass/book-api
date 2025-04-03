@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public final class InMemoryBookRepository implements BookGateway {
+public class InMemoryBookRepository implements BookGateway {
     private final List<Book> books = new ArrayList<>(
             List.of(
                     new Book(new ISBN("978-0-306-40615-7"),
