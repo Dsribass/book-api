@@ -4,6 +4,7 @@ import com.example.domain.value.Address;
 import com.example.domain.value.Email;
 import com.example.domain.value.Phone;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -80,7 +81,7 @@ public class Client {
     }
 
     public ZonedDateTime getRegistrationDate() {
-        return registrationDate;
+        return registrationDate.withZoneSameInstant(ZoneOffset.UTC);
     }
 
     public Boolean getActive() {

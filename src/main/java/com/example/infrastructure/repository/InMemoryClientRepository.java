@@ -24,6 +24,7 @@ public class InMemoryClientRepository implements ClientGateway {
                                     "Main St",
                                     "Springfield",
                                     "IL",
+                                    "USA",
                                     "00000000"
                             ),
                             true

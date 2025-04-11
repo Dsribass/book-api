@@ -3,20 +3,22 @@ package com.example.domain.value;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public record Address(String street, String number, String city, String state, String zipCode) {
+public record Address(String street, String number, String city, String state, String country, String zipCode) {
     private static final Pattern CEP_PATTERN = Pattern.compile("\\d{5}\\d{3}");
 
-    public Address(String street, String number, String city, String state, String zipCode) {
+    public Address(String street, String number, String city, String state, String country,String zipCode) {
         Objects.requireNonNull(street, "Street cannot be null");
         Objects.requireNonNull(number, "Number cannot be null");
         Objects.requireNonNull(city, "City cannot be null");
         Objects.requireNonNull(state, "State cannot be null");
+        Objects.requireNonNull(country, "Country cannot be null");
         Objects.requireNonNull(zipCode, "Postal Code (CEP) cannot be null");
 
         this.street = street.trim();
         this.number = number.trim();
         this.city = city.trim();
         this.state = state.trim();
+        this.country = country.trim();
         this.zipCode = zipCode.trim();
 
         if (this.street.isEmpty() || this.city.isEmpty() || this.state.isEmpty()) {
@@ -50,6 +52,7 @@ public record Address(String street, String number, String city, String state, S
                 number.equals(address.number) &&
                 city.equals(address.city) &&
                 state.equals(address.state) &&
+                country.equals(address.country) &&
                 zipCode.equals(address.zipCode);
     }
 

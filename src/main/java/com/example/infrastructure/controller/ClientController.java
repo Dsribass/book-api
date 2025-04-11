@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/clients")
@@ -79,6 +80,7 @@ public class ClientController {
                 "Clients retrieved successfully",
                 clients.stream()
                         .map(ClientResponse::fromEntity)
+                        .collect(Collectors.toList())
         )
                 .toResponseEntity();
     }

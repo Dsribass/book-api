@@ -51,11 +51,13 @@ public record ClientRequest(
             String city,
             @NotBlank(message = "State is required")
             String state,
+            @NotBlank(message = "Country is required")
+            String country,
             @NotBlank(message = "Zip code is required")
             String zipCode
     ) {
         public Address toEntity() {
-            return new Address(street, number, city, state, zipCode);
+            return new Address(street, number, city, state, country, zipCode);
         }
     }
 
