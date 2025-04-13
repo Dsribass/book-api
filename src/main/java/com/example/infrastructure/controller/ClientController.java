@@ -43,7 +43,7 @@ public class ClientController {
 
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<DefaultResponse> update(
             @PathVariable String id,
             @RequestBody @Valid ClientRequest client

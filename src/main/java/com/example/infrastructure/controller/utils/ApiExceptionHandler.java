@@ -1,5 +1,6 @@
 package com.example.infrastructure.controller.utils;
 
+import com.example.domain.exception.DomainException;
 import com.example.domain.exception.ItemAlreadyExists;
 import com.example.domain.exception.ItemNotExistsException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,17 @@ import java.util.stream.Collectors;
 public class ApiExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUnexpectedException(Exception e) {
-        final var message = e.toString();
         final var errorResponse = new ErrorResponse(
-                message,
+                "Internal server error",
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+        return errorResponse.toResponseEntity();
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<Object> handleDomainException(DomainException e) {
+        final var errorResponse = new ErrorResponse(
+                e.toString(),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
         return errorResponse.toResponseEntity();

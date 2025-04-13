@@ -18,7 +18,7 @@ public class GetClientUseCase extends UseCase<GetClientUseCase.Input, Client> {
     @Override
     protected Client run(Input input) {
         return clientGateway.findById(input.id)
-                .orElseThrow(() -> new ItemNotExistsException("Book not found"));
+                .orElseThrow(() -> new ItemNotExistsException("Client not found"));
     }
 
     public record Input(String id) {
