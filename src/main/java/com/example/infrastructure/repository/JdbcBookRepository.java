@@ -133,6 +133,16 @@ public class JdbcBookRepository implements BookGateway {
     }
 
     @Override
+    public void deleteGenreByName(String genre) {
+        var sql =  """ 
+                DELETE FROM genres
+                WHERE name=?
+                """;
+
+        jdbcTemplate.update(sql, genre);
+    }
+
+    @Override
     public Optional<String> findGenreByName(String genre) {
         var sql = """
                 SELECT name

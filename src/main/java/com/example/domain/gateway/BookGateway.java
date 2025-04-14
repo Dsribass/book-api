@@ -21,4 +21,6 @@ public interface BookGateway {
     List<String> findAllGenres();
 
     Optional<String> findGenreByName(String genre);
+
+    void deleteGenreByName(String genre);
 }

@@ -1,8 +1,12 @@
 package com.example.infrastructure.controller;
 
 import com.example.domain.usecase.book.*;
+import com.example.domain.usecase.book.genre.AddGenreUseCase;
+import com.example.domain.usecase.book.genre.DeleteGenreUseCase;
+import com.example.domain.usecase.book.genre.GetAllGenresUseCase;
 import com.example.domain.value.ISBN;
 import com.example.infrastructure.controller.dto.book.AddBookRequest;
+import com.example.infrastructure.controller.dto.book.AddGenreRequest;
 import com.example.infrastructure.controller.dto.book.BookResponse;
 import com.example.infrastructure.controller.dto.book.UpdateBookRequest;
 import com.example.infrastructure.controller.utils.DefaultResponse;
@@ -21,18 +25,28 @@ public class BookController {
     private final GetAllBooksUseCase getAllBooksUseCase;
     private final UpdateBookUseCase updateBookUseCase;
     private final DeleteBookUseCase deleteBookUseCase;
+    private final AddGenreUseCase addGenreUseCase;
+    private final GetAllGenresUseCase getAllGenresUseCase;
+    private final DeleteGenreUseCase deleteGenreUseCase;
 
     public BookController(AddBookUseCase addBookUseCase,
                           GetBookByIsbnUseCase getBookByIsbnUseCase,
                           GetAllBooksUseCase getAllBooksUseCase,
                           UpdateBookUseCase updateBookUseCase,
-                          DeleteBookUseCase deleteBookUseCase
+                          DeleteBookUseCase deleteBookUseCase,
+                          AddGenreUseCase addGenreUseCase,
+                          GetAllGenresUseCase getAllGenresUseCase,
+                          DeleteGenreUseCase deleteGenreUseCase
+
     ) {
         this.addBookUseCase = addBookUseCase;
         this.getBookByIsbnUseCase = getBookByIsbnUseCase;
         this.getAllBooksUseCase = getAllBooksUseCase;
         this.updateBookUseCase = updateBookUseCase;
         this.deleteBookUseCase = deleteBookUseCase;
+        this.addGenreUseCase = addGenreUseCase;
+        this.getAllGenresUseCase = getAllGenresUseCase;
+        this.deleteGenreUseCase = deleteGenreUseCase;
     }
 
     @PostMapping
@@ -82,6 +96,29 @@ public class BookController {
                 books.stream()
                         .map(BookResponse::fromEntity)
                         .toList()
+        ).toResponseEntity();
+    }
+
+    @GetMapping("genres/")
+    public ResponseEntity<DefaultResponse> getAllGenres() {
+        var genres = getAllGenresUseCase.execute(new GetAllGenresUseCase.Input());
+        return new DefaultResponse("List of genres", genres).toResponseEntity();
+    }
+
+    @PostMapping("/genres")
+    public ResponseEntity<DefaultResponse> addGenre(@RequestBody @Valid AddGenreRequest request) {
+        addGenreUseCase.execute(new AddGenreUseCase.Input(request.name()));
+
+        return new DefaultResponse("Genre added successfully", null)
+                .toResponseEntity(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/genres/{name}")
+    public ResponseEntity<DefaultResponse> deleteGenre(@PathVariable String name) {
+        deleteGenreUseCase.execute(new DeleteGenreUseCase.Input(name));
+        return new DefaultResponse(
+                "Genre deleted successfully",
+                Map.of("deletedGenre", name)
         ).toResponseEntity();
     }
 }

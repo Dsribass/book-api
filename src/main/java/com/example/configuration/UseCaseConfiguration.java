@@ -3,6 +3,9 @@ package com.example.configuration;
 import com.example.domain.gateway.BookGateway;
 import com.example.domain.gateway.ClientGateway;
 import com.example.domain.usecase.book.*;
+import com.example.domain.usecase.book.genre.AddGenreUseCase;
+import com.example.domain.usecase.book.genre.DeleteGenreUseCase;
+import com.example.domain.usecase.book.genre.GetAllGenresUseCase;
 import com.example.domain.usecase.client.*;
 import com.example.domain.utils.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,5 +76,20 @@ public class UseCaseConfiguration {
     @Bean
     public UpdateClientUseCase updateClientUseCase(ClientGateway clientGateway) {
         return new UpdateClientUseCase(clientGateway, getLogger());
+    }
+
+    @Bean
+    public GetAllGenresUseCase getAllGenresUseCase(BookGateway bookGateway) {
+        return new GetAllGenresUseCase(bookGateway, getLogger());
+    }
+
+    @Bean
+    public DeleteGenreUseCase deleteGenreUseCase(BookGateway bookGateway) {
+        return new DeleteGenreUseCase(bookGateway, getLogger());
+    }
+
+    @Bean
+    public AddGenreUseCase addGenreUseCase(BookGateway bookGateway) {
+        return new AddGenreUseCase(bookGateway, getLogger());
     }
 }
